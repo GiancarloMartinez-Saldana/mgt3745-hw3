@@ -1,7 +1,16 @@
-# Canonical agent instructions
+# Claude instructions
 
-Status: ACTIVE in Module 3. Read context/STANDARDS.md and the selected scope in FEATURES.md before editing. STANDARDS.md is normative; report and repair conflicting instruction wording.
+Status: ACTIVE in Module 3.
 
-Use descriptive camelCase names and lexical scope. Keep HTML, CSS, and JavaScript separate. Explain significant reasons in comments. Use meaningful commit messages. Insert user text with textContent; do not use innerHTML for it. Label controls and preserve unsaved input after a failed write. Verify expected behavior before claiming completion. Never invent interview evidence or test results. Leave preview files as previews.
+This project is a subscription cost dashboard: users enter streaming
+services and prices, and the app displays a running monthly total.
 
-Root CLAUDE.md imports this file for Claude Code. VS Code Copilot uses the separate .github/copilot-instructions.md adapter. A location under /context alone is not a guarantee of automatic discovery.
+These are the same rules as STANDARDS.md, restated as instructions for an agent. If this file and STANDARDS.md disagree, STANDARDS.md is the source of truth.
+
+1. When naming variables and functions, use camelCase and choose names that describe what the value holds or what the function does in domain terms (e.g. `service`, `price`, `saveNotes`). Do not use single letters or generic names like `data` or `x`.
+
+2. Keep structure, presentation, and behavior in separate files: HTML markup only in `index.html`, CSS only in `styles.css`, JavaScript only in `app.js`. Do not write inline styles. Do not add any `<script>` content to the HTML beyond the tag loading `app.js`.
+
+3. When writing comments, explain why the code exists or why a decision was made. Do not write a comment that only restates what the next line does.
+
+4. Never use `innerHTML` to render text that came from user input. Always use `textContent` instead, so user-typed content is never interpreted as HTML or executed as a script.

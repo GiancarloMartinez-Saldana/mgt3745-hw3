@@ -1,14 +1,6 @@
 # Cost Tracker
 
 
-![Status](https://img.shields.io/badge/status-in%20progress-yellow)
-![Module](https://img.shields.io/badge/MGT%203745-HW3-051E39)
-
-> HW3, MGT 3745 O. Replace every [bracketed prompt] with your own writing.
-> Lines between `<!--` and `-->` are notes to you. They are invisible on GitHub. Delete them when done.
-> This README is the first thing an employer, a teammate, or an agent reads. It makes
-> a case for the repository. Show, then tell.
-
 ## What
 
 This is a subscription cost dashboard, adapted from the meeting-notes starter to implement F-01 from FEATURES.md: a place to track streaming subscriptions and see total monthly spend at a glance. See PROJECT.md for the full problem framing and FEATURES.md for the complete specification this feature is drawn from.
@@ -16,9 +8,6 @@ This is a subscription cost dashboard, adapted from the meeting-notes starter to
 ## See It Work
 
 <img width="1568" height="750" alt="image" src="https://github.com/user-attachments/assets/602c8a99-33da-4317-93ef-5cdde01adfac" />
-
-Put a screenshot or GIF under docs/ and link it here with descriptive alt text. Explain which acceptance criterion it demonstrates.
-![Saving an entry and seeing it appear in the list](docs/demo.gif)
 
 This demonstrates the Event-driven acceptance criterion: "When a user adds a new subscription entry with a price, the system shall update the total monthly spend shown on the dashboard within 2 seconds." The total ($48.00) correctly reflects the sum of all three entries ($20 + $13 + $15).
 
@@ -35,33 +24,34 @@ This project runs inside a GitHub Codespace. No local install.
 If Live Server is unavailable, run `node scripts/serve.mjs` in the terminal, then open port 5500 from the Ports tab. Refresh the browser after edits when using this fallback; stop it with **Ctrl+C**. Run only one server on port 5500 at a time. The fallback also works locally with Node 22 or later. Serve over HTTP rather than opening `index.html` through `file://`.
 
 
-
 ## How It Works
-
 
 ```mermaid
 flowchart TD
- A[Page opens] --> B[loadNotes: read and validate localStorage]
-  B --> C[renderNotes: draw current state]
-  D[User submits entry] --> E{Trimmed input is 1 to 200 characters?}
-  E -->|No| F[Show validation error and keep input]
-  E -->|Yes| G[Create proposed notes array]
-  G --> H{saveNotes: storage write succeeds?}
-  H -->|No| I[Show save error; keep input and current list]
-  H -->|Yes| J[Update in-memory notes]
-  J --> K[renderNotes: redraw list]
-  K --> L[Clear input and announce saved]
+  A[Page opens] --> B[loadNotes: read and validate localStorage]
+  B --> C[renderNotes: draw current state and running total]
+  D[User submits service name and price] --> E{Service name is 1 to 200 characters?}
+  E -->|No| F[Show name validation error and keep input]
+  E -->|Yes| G{Price is a finite number greater than 0?}
+  G -->|No| H[Show price validation error and keep input]
+  G -->|Yes| I[Create proposed subscriptions array]
+  I --> J{saveNotes: storage write succeeds?}
+  J -->|No| K[Show save error; keep input and current list]
+  J -->|Yes| L[Update in-memory subscriptions]
+  L --> M[renderNotes: recompute total, redraw list]
+  M --> N[Clear inputs and announce saved]
 ```
 
-This diagram describes the starter's load-and-add flow. Update it to match your implementation. In `app.js`, `loadNotes` reads stored data, `saveNotes` attempts to persist a proposed state, and `renderNotes` draws the current state using `textContent` for user text. The submit handler validates input and updates the visible state only after a successful save. Delete also saves the proposed state before redrawing. A read failure shows a warning and starts with an empty in-memory list; it leaves the original storage unchanged until a successful new save replaces it.
+In `app.js`, `loadNotes` reads stored data and validates that each entry has a non-empty `service` string and a finite, positive `price`, discarding and warning on anything else. `saveNotes` attempts to persist a proposed array of `{ service, price }` objects — its logic is unchanged from the starter; it still just writes whatever array it's given and reports success or failure. `renderNotes` draws the current list using `textContent` for user-entered text, and additionally computes the running total (`notes.reduce((sum, entry) => sum + entry.price, 0)`) and displays it above the list. The submit handler validates both fields — a non-empty service name and a price greater than 0 — and only updates the visible state after a successful save. Delete also saves the proposed state before redrawing, and the total recalculates automatically since it's derived fresh on every render. A read failure shows a warning and starts with an empty in-memory list; it leaves the original storage unchanged until a successful new save replaces it.
+
 
 ## Status
 
 | Area | State | Why |
 |------|-------|-----|
 | Save and display | Works | [Screenshot](docs/subscription-dashboard.png) shows three saved subscriptions with prices and a total of $48.00, matching manual addition.|
-| Invalid input | Works | Verification results — empty service name and $0/negative price each produced distinct error messages. |
-| Data survives reload / storage failure | Works | Verification results — reload preserved entries and total; ?failSave triggered the correct save-failure message. |
+| Invalid input | Works |[Verification results](context/FEATURES.md#verification)empty service name and $0/negative price each produced distinct error messages. |
+| Data survives reload / storage failure | Works | [Verification results](context/FEATURES.md#verification) reload preserved entries and total; ?failSave triggered the correct save-failure message. |
 | Multi-user sync (starter limitation) | Deferred | Browser-local storage does not provide sync. Explain your own scope and decision in [ADR-001](context/ARCHITECTURE.md). |
 
 
@@ -90,9 +80,7 @@ Read in this order:
 5. [`context/STANDARDS.md`](context/STANDARDS.md): the rules this code follows
 6. [`context/CLAUDE.md`](context/CLAUDE.md): the same rules, for agents
 
-The scaffold has **eleven canonical files in `/context`: six active files above and five previews**: [STYLE.md](context/STYLE.md), [TOOLS.md](context/TOOLS.md), [SKILLS.md](context/SKILLS.md), [EVALS.md](context/EVALS.md), and [AGENTS.md](context/AGENTS.md). Keep the previews; verification stays in FEATURES.md until EVALS.md activates in Module 5.
-
-Root README.md and the two instruction adapters—[CLAUDE.md](CLAUDE.md) and [.github/copilot-instructions.md](.github/copilot-instructions.md)—are additional files. Copy your HW2 USERS.md and FEATURES.md into `/context` and revise them using instructor feedback if available; otherwise record a peer criterion check and mark instructor feedback pending. Run `node scripts/check-scaffold.mjs` to check required file presence; this does not assess content quality.
+The scaffold has **eleven canonical files in `/context`: six active files above and five previews**: [STYLE.md](context/STYLE.md), [TOOLS.md](context/TOOLS.md), [SKILLS.md](context/SKILLS.md),
 
 ## AI Use
 

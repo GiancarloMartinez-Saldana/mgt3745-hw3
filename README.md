@@ -7,7 +7,7 @@ This is a subscription cost dashboard, adapted from the meeting-notes starter to
 
 ## See It Work
 
-<img width="1568" height="750" alt="image" src="https://github.com/user-attachments/assets/602c8a99-33da-4317-93ef-5cdde01adfac" />
+<img width="900" height="820" alt="Subscription dashboard showing three saved subscriptions (Netflix $20, Hulu $13, Spotify $15) and a total monthly spend of $48.00" src="docs/subscription-dashboard.png" />
 
 This demonstrates the Event-driven acceptance criterion: "When a user adds a new subscription entry with a price, the system shall update the total monthly spend shown on the dashboard within 2 seconds." The total ($48.00) correctly reflects the sum of all three entries ($20 + $13 + $15).
 

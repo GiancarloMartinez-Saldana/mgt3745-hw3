@@ -1,6 +1,6 @@
-# [Project Name]
+# Cost Tracker
 
-<!-- Badges are optional but cheap. shields.io generates them from a URL. -->
+
 ![Status](https://img.shields.io/badge/status-in%20progress-yellow)
 ![Module](https://img.shields.io/badge/MGT%203745-HW3-051E39)
 
@@ -11,19 +11,16 @@
 
 ## What
 
-Replace this title and paragraph with your chosen feature and link [PROJECT.md](context/PROJECT.md) and [FEATURES.md](context/FEATURES.md). This runnable "meeting notes" application is a teaching starter, not a completed student submission. Adapt it to your researched feature and make a meaningful change you can explain.
+This is a subscription cost dashboard, adapted from the meeting-notes starter to implement F-01 from FEATURES.md: a place to track streaming subscriptions and see total monthly spend at a glance. See PROJECT.md for the full problem framing and FEATURES.md for the complete specification this feature is drawn from.
 
 ## See It Work
 
-<!-- REQUIRED: at least one image or GIF of the feature meeting an EARS statement.
-     Put media in the docs/ folder. Keep GIFs under 5 MB.
-     Record: macOS Cmd+Shift+5, Windows Win+Alt+R or Snipping Tool video. Convert at ezgif.com.
-     Markdown image syntax: -->
+<img width="1568" height="750" alt="image" src="https://github.com/user-attachments/assets/602c8a99-33da-4317-93ef-5cdde01adfac" />
+
 Put a screenshot or GIF under docs/ and link it here with descriptive alt text. Explain which acceptance criterion it demonstrates.
 ![Saving an entry and seeing it appear in the list](docs/demo.gif)
 
-<!-- HTML gives you sizing control markdown does not: -->
-<!-- <img src="docs/screenshot.png" width="480" alt="The entry list after three saves"> -->
+This demonstrates the Event-driven acceptance criterion: "When a user adds a new subscription entry with a price, the system shall update the total monthly spend shown on the dashboard within 2 seconds." The total ($48.00) correctly reflects the sum of all three entries ($20 + $13 + $15).
 
 ## How to Run
 
@@ -37,14 +34,10 @@ This project runs inside a GitHub Codespace. No local install.
 
 If Live Server is unavailable, run `node scripts/serve.mjs` in the terminal, then open port 5500 from the Ports tab. Refresh the browser after edits when using this fallback; stop it with **Ctrl+C**. Run only one server on port 5500 at a time. The fallback also works locally with Node 22 or later. Serve over HTTP rather than opening `index.html` through `file://`.
 
-<!-- The .devcontainer folder installs Live Server automatically. If the right-click option
-     is missing, wait for the extension to finish installing (bottom-left status bar), or run
-     `python3 -m http.server 5500` in the terminal and open port 5500 from the Ports tab.
-     Edit these steps if your feature needs anything more. -->
+
 
 ## How It Works
 
-<!-- GitHub renders Mermaid natively inside a ```mermaid fence. -->
 
 ```mermaid
 flowchart TD
@@ -66,9 +59,9 @@ This diagram describes the starter's load-and-add flow. Update it to match your 
 
 | Area | State | Why |
 |------|-------|-----|
-| Save and display | [Works / Partial / Broken / Not tested] | [Link your verification evidence] |
-| Invalid input | [Works / Partial / Broken / Not tested] | [Link your verification evidence] |
-| Data survives reload / storage failure | [Works / Partial / Broken / Not tested] | [Link your verification evidence] |
+| Save and display | Works | [Screenshot](docs/subscription-dashboard.png) shows three saved subscriptions with prices and a total of $48.00, matching manual addition.|
+| Invalid input | Works | Verification results — empty service name and $0/negative price each produced distinct error messages. |
+| Data survives reload / storage failure | Works | Verification results — reload preserved entries and total; ?failSave triggered the correct save-failure message. |
 | Multi-user sync (starter limitation) | Deferred | Browser-local storage does not provide sync. Explain your own scope and decision in [ADR-001](context/ARCHITECTURE.md). |
 
 
@@ -103,7 +96,7 @@ Root README.md and the two instruction adapters—[CLAUDE.md](CLAUDE.md) and [.g
 
 ## AI Use
 
-<!-- A Delegation Decision Record without the name. From HW5 this becomes a formal DDR. -->
+minimal I asked claude to help me understand the steps I should take and along the way I asked it to check my code for errors and to make sure it was easy to understand/read.
 
 **Tool and task delegated:** [Which parts a tool drafted: e.g. "Copilot drafted render() and the CSS."]
 
@@ -117,16 +110,19 @@ If no AI assistance was used, say so and describe your independent check. Full D
 
 **Instruction discovery and compliance:** [Record the tool and mode, which instruction adapter it discovered, and the reference or diagnostic evidence. Separately report whether one generated change followed the applicable standards. If no live AI tool is available, write “not run” and record a manual standards review.]
 
-**Actual hours on this assignment (optional):** [A number, if you choose to report it. The amount or omission does not affect points; the AI-use record does.]
+**Actual hours on this assignment (optional):** 4
 
 ## Explain, Change, Verify
 
-[Identify one function and explain its input, state changes, and output in your own words. Link a meaningful before/after code change, state its expected effect, and record the observed behavior and evidence. Explain why the change matters to your selected requirement. This paragraph is part of the existing README submission.]
 
-<!-- Things this README could also do, if they earn their place:
-     - GitHub alerts:  > [!NOTE]  > [!WARNING]  > [!TIP]
-     - Task lists:     - [x] done   - [ ] not yet
-     - Emoji:          :rocket: :white_check_mark:
-     - Footnotes:      text[^1]  ...  [^1]: the note
-     - Embedded HTML tables, <kbd>Ctrl</kbd>+<kbd>S</kbd>, <sup>, <sub>
-     None are required. A README that reads well with none of them beats one that uses all of them. -->
+Function: renderNotes
+Input: the in-memory notes array — now objects shaped { service, price } instead of plain strings.
+State changes: none — renderNotes is a pure read/render function; it doesn't mutate notes or write to storage.
+Output: rebuilds the <ul> list (one <li> per subscription, showing Service — $price/mo with a delete button) and writes a computed total (notes.reduce((sum, entry) => sum + entry.price, 0)) into #spend-total.
+
+Before: rendered each note as plain text with no aggregate figure.
+After: renders service name and formatted price per entry, and displays a running total above the list, recalculated on every render.
+Expected effect: a user should see their total monthly spend update immediately whenever they add or delete a subscription, without a page reload.
+Observed behavior: confirmed directly — adding a subscription updated the total instantly, and deleting one recalculated it correctly, matching the F-01 acceptance criterion.
+Why this matters: F-01 was classified Must-be in FEATURES.md because both interview participants underestimated their own subscription count when asked directly. This function is the one place in the app where that hidden gap becomes visible to the user — everything else (data entry, validation, storage) exists to make this calculation possible and reliable.
+

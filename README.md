@@ -96,21 +96,21 @@ Root README.md and the two instruction adapters—[CLAUDE.md](CLAUDE.md) and [.g
 
 ## AI Use
 
-minimal I asked claude to help me understand the steps I should take and along the way I asked it to check my code for errors and to make sure it was easy to understand/read.
+I asked claude to help me understand the steps I should take and along the way I asked it to check my code for errors and to make sure it was easy to understand/read.
+I didn't read ahead and figure out that I needed a classmate to complete Standards.md with me so I asked claude to write a mock answer which helped me edit a mistake I made, but I understand that is not ideal for the assignment and if possible I'd love to contact a classmate maybe during the next lecture so that I can do that section correctly.
+**Tool and task delegated: Claude chat interface helped me thorugh STANDARDS.md/CLAUDE.md's five rules and Split Test reasoning, and a simulated Colleague Test read of CLAUDE.md.
 
-**Tool and task delegated:** [Which parts a tool drafted: e.g. "Copilot drafted render() and the CSS."]
+**Why: There is a ton of content to get through and I needed it to help me stay focused on what was important for each tasks as quickly/efficiently as possible.
 
-**Why:** [The reason it made sense to delegate that part rather than write it.]
+**How it was checked: I tried not to let it do any heavy lifting it was more of an editor thus I was just taking it criticism into account rather than using it and then editing what it gave me.
 
-**How it was checked:** [What you inspected, what you changed, what you caught. "Replaced innerHTML with textContent" is the kind of sentence that belongs here.]
-
-**Observed result / evidence:** [What the checks actually showed; link the relevant verification row, code change, or other evidence. Do not invent a run.]
+**Observed result / evidence: I have nothing to show for this.
 
 If no AI assistance was used, say so and describe your independent check. Full Delegation Decision Records begin at HW5; this lightweight record is sufficient here.
 
-**Instruction discovery and compliance:** [Record the tool and mode, which instruction adapter it discovered, and the reference or diagnostic evidence. Separately report whether one generated change followed the applicable standards. If no live AI tool is available, write “not run” and record a manual standards review.]
+**Instruction discovery and compliance: I didn't use a live tool I used claudes chat so that I could show it exactly what I needed help with and nothing more. It also helped me stay organized because I can use the split view to see my "next steps" whenever I asked claude to help me outline steps for a section.
 
-**Actual hours on this assignment (optional):** 4
+**Actual hours on this assignment (optional):** 6-7
 
 ## Explain, Change, Verify
 

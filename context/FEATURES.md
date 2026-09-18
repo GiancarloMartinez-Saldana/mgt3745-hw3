@@ -73,15 +73,17 @@ I asked a reader (Claude) to check FEATURES.md against the "could two competent 
 
 ## Verification
 
-**Scope note:** Per ADR-001 and the assignment's "choose small" guidance, only F-01 (subscription cost dashboard: service name, price, running total) and F-05 (manual subscription entry) were selected for the HW3 build. Statements below tied to unselected features (F-02 Safe pick, F-03 filtering, F-06 reasoning display) are marked CANNOT TEST YET, since those flows were never implemented this cycle — not because they failed, but because they were out of scope for this week's chosen feature.
+**Scope note:** Per ADR-001 and the assignment's "choose small" guidance, only F-01 (subscription cost dashboard) and F-05 (manual subscription entry) were selected for the HW3 build. Statements tied to unselected features (F-02 Safe pick, F-03 filtering, F-06 reasoning display) are marked CANNOT TEST YET, since those flows were never implemented this cycle.
 
 | # | Acceptance statement | Result | Evidence / reason |
 |---|---|---|---|
-| 1 | Ubiquitous: The system shall not display, link to, or reference pirated content sources at any point in the "Something new" or "Safe pick" flows. | CANNOT TEST YET | Neither the "Something new" nor "Safe pick" flow (F-02/F-03) was built this cycle; only F-01/F-05 were in scope per ADR-001. |
-| 2 | Event-driven: When a user adds a new subscription entry with a price, the system shall update the total monthly spend shown on the dashboard within 2 seconds. | PASS | Tested directly in the Codespace: added three subscriptions (netflix $20, hulu $13, spotify $15); total updated to $48.00 immediately on each addition. See [screenshot](docs/subscription-dashboard.png). |
-| 3 | State-driven: While a subscription list contains zero entered services, the system shall disable the "What should I watch?" button rather than allow the user to reach an empty Safe pick or Something new flow. | CANNOT TEST YET | This criterion belongs to the "What should I watch?" flow (F-02/F-03), which was not built this cycle. No such button exists in the current implementation. |
-| 4 | Unwanted: If a mood/format filter returns zero matching titles, then the system shall display a message stating no matches were found, rather than an empty screen or a suggestion outside the user's entered services. | CANNOT TEST YET | The mood/format filter (F-03) was not built this cycle. |
-| 5 | Optional: Where a subscription entry includes a renewal date, the system shall display that date alongside the service in the dashboard list. | FAIL | The renewal date field described in FEATURES.md's Behavior step 1 was not implemented in `index.html`/`app.js` — there is no renewal date input or display anywhere in the current build. This is a genuine gap between the spec and the shipped code, not a deferred or untested feature. |
+| 1 | Ubiquitous: no pirated content sources referenced in Safe pick / Something new flows | CANNOT TEST YET | Neither flow (F-02/F-03) was built this cycle; out of scope per ADR-001. |
+| 2 | Event-driven: adding a subscription updates total spend within 2 seconds | PASS | Added three subscriptions (netflix $20, hulu $13, spotify $15); total updated to $48.00 immediately on each addition. See [screenshot](docs/subscription-dashboard.png). |
+| 3 | State-driven: "What should I watch?" disabled with zero entries | CANNOT TEST YET | This button belongs to the F-02/F-03 flow, not built this cycle. |
+| 4 | Unwanted: zero filter matches show a no-matches message | CANNOT TEST YET | Mood/format filter (F-03) not built this cycle. |
+| 5 | Optional: renewal date displayed alongside service when given | FAIL | No renewal date field exists in `index.html`/`app.js`. Genuine gap between Behavior step 1 and shipped code. |
+| 6 | Unwanted: invalid service name or price rejected with a distinct error, entry not saved | PASS | Tested empty service name and $0/negative price separately; each produced a distinct, correct error message and no invalid entry was saved. |
+| 7 | State-driven: failed save preserves the entry and leaves prior list/total unchanged | PASS | Tested with `?failSave` in the URL; correct error message shown, entry remained in the input field, and the previously saved list and total were unmodified. |
 
 ## AI assistance
 I asked it to help me have arrows for clear visuals. It also helped me organize all my points to develop my kano hypotheses and other structural details. Lastly I made a new chat and dropped in all of the assignment info and what I wrote and asked it to be my peer because it is late on a Thursday (I hope this is allowed), and I knew it would be a more thorough check anyways.

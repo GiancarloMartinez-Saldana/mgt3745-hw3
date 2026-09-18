@@ -39,16 +39,15 @@ Fit to spec
 3: Meets the core behavior but misses details
 5: Matches Behavior, Scope, and non-goals exactly
 
-| Criterion | Weight | Hand-built option | Existing-service option | AI-assisted build |
-|---|---:|---:|---:|---:|
-| Criterion | 1 anchor | 3 anchor | 5 anchor |
-|---|---|---|---|
-| Cost to start | Requires payment or a paid account to begin | Free tier available but with real limits | Entirely free, no account needed |
-| Cost to maintain | Ongoing subscription or fees required | Free but requires occasional manual upkeep | Free and effectively zero upkeep |
-| Time to working | Would take multiple weeks to get running | Working within a few days | Working within hours |
-| Inspectability | I cannot read or verify the resulting code at all | I can follow the code but would miss subtle bugs | I wrote every line and can explain it fully |
-| Switching cost | Locked in; painful to replace later | Some rework needed to replace | Trivial to replace or modify later |
-| Fit to spec | Actively conflicts with a stated non-goal | Meets the core behavior but misses details | Matches Behavior, Scope, and non-goals exactly |
+| Criterion | Weight | Hand-built — Score | Hand-built — Weighted | Existing-service — Score | Existing-service — Weighted | AI-assisted — Score | AI-assisted — Weighted |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Cost to start | 5 | 5 | 25 | 3 | 15 | 5 | 25 |
+| Cost to maintain | 4 | 5 | 20 | 3 | 12 | 5 | 20 |
+| Time to working | 4 | 3 | 12 | 5 | 20 | 5 | 20 |
+| Inspectability | 5 | 5 | 25 | 1 | 5 | 1 | 5 |
+| Switching cost | 2 | 5 | 10 | 1 | 2 | 3 | 6 |
+| Fit to spec | 4 | 5 | 20 | 1 | 4 | 3 | 12 |
+| **Total** | **24** | | **112** | | **58** | | **88** |
 
 ## ADR-001
 

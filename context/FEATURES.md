@@ -62,7 +62,9 @@ Timing: The dashboard total (step 2) shall reflect an edited entry (step 8) with
 - Event-driven: When a user adds a new subscription entry with a price, the system shall update the total monthly spend shown on the dashboard within 2 seconds.
 - State-driven: While a subscription list contains zero entered services, the system shall disable the "What should I watch?" button rather than allow the user to reach an empty Safe pick or Something new flow.
 - Unwanted: If a mood/format filter returns zero matching titles, then the system shall display a message stating no matches were found, rather than an empty screen or a suggestion outside the user's entered services.
-- Optional: Where a subscription entry includes a renewal date, the system shall display that date alongside the service in the dashboard list if it is given.
+- Optional: Where a subscription entry includes a renewal date, the system shall display that date alongside the service in the dashboard list.
+- Unwanted: If a submitted service name is empty or a submitted price is not a positive number, then the system shall display a distinct error message for each case and shall not save the entry.
+- State-driven: While a save operation fails, the system shall preserve the entry in the input field and shall not modify the previously saved list or total.
 
 ## Handoff reflection
 

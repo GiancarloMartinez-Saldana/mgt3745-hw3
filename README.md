@@ -58,15 +58,20 @@ In `app.js`, `loadNotes` reads stored data and validates that each entry has a n
 <details>
 <summary>Verification results (click to expand)</summary>
 
-Keep the full verification record in [FEATURES.md](context/FEATURES.md). Summarize it here or link directly to its Verification section; keep both consistent.
+Full verification record: [context/FEATURES.md#verification](context/FEATURES.md#verification). Scope note: only F-01/F-05 (subscription entry and cost dashboard) were built this cycle per ADR-001; statements tied to unselected features (F-02, F-03, F-06) are marked CANNOT TEST YET rather than PASS or FAIL.
 
 | Criterion / EARS statement | Steps and input | Expected result | Observed result | Status | Evidence / commit |
 |---|---|---|---|---|---|
-| [Your selected criterion ID] | [Reproducible procedure] | [State before testing] | [What actually happened] | [PASS / FAIL / CANNOT TEST / DEFERRED] | [Link] |
-
-Cover a normal action, relevant invalid input, and persistence or failure. PASS requires observed results that match expectations; all-PASS is acceptable with evidence. For CANNOT TEST, state the limitation and next step. Identify unselected requirements separately; DEFERRED does not waive the required HW3 feature. A screenshot alone cannot establish reload or storage-failure behavior.
+| Event-driven: adding a subscription updates total spend within 2 seconds | Added three subscriptions: netflix $20, hulu $13, spotify $15 | Total shows $48.00 immediately after each add | Total updated instantly and correctly after each entry | PASS | [Screenshot](docs/subscription-dashboard.png) |
+| Unwanted (implementation-level, not yet a numbered EARS statement): invalid input is rejected with a clear message | Submitted an empty service name; separately submitted a $0 and a negative price | Distinct error message per case, entry not saved | Correct distinct error message shown in each case; no invalid entry was saved | PASS | Manually tested in Codespace; not yet formalized as a numbered Acceptance statement — see note below |
+| Unwanted/State-driven (implementation-level): data persists on reload and a save failure is handled | Reloaded the page after saving three entries; separately loaded the page with `?failSave` in the URL and attempted to save | Entries and total persist after reload; `?failSave` shows a save error and keeps the entry in the input | Entries and total persisted correctly after reload; `?failSave` showed the correct error and preserved the input | PASS | Manually tested in Codespace; not yet formalized as a numbered Acceptance statement — see note below |
+| Ubiquitous: no pirated content sources referenced in Safe pick / Something new flows | N/A — flow not built this cycle | N/A | Flow does not exist in current build | CANNOT TEST YET | F-02/F-03 out of scope for HW3 per ADR-001 |
+| State-driven: "What should I watch?" disabled with zero entries | N/A — flow not built this cycle | N/A | No such button exists in current build | CANNOT TEST YET | F-02/F-03 out of scope for HW3 per ADR-001 |
+| Unwanted: zero filter matches show a no-matches message | N/A — flow not built this cycle | N/A | Mood/format filter does not exist in current build | CANNOT TEST YET | F-03 out of scope for HW3 per ADR-001 |
+| Optional: renewal date displayed alongside service when given | Checked `index.html`/`app.js` for a renewal date field | Renewal date input and display present | No renewal date field exists anywhere in the current build | FAIL | Confirmed by code review; genuine gap between FEATURES.md Behavior step 1 and shipped code |
 
 </details>
+
 
 ## Links
 
